@@ -26,21 +26,5 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        dockerfile: Dockerfile-prod
-        tags: latest
-    - name: Deploy package to AKS
-      uses: appleboy/ssh-action@master
-      env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        envs: GITHUB_USERNAME, GITHUB_TOKEN
         script: |
-          docker stop $(docker ps -a -q)
-          docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
-          docker pull docker.pkg.github.com/kenessajr/react-with-actions/react-with-actions:latest
-          docker run -dit -p 80:80 docker.pkg.github.com/kenessajr/react-with-actions/react-with-actions:latest
+          docker push ghcr.io/NAMESPACE/IMAGE_NAME:latest
