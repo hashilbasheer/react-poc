@@ -20,16 +20,15 @@ jobs:
         yarn test
       env:
         CI: true
-    - name: Publish to Github Packages Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
       with:
-        name: kenessajr/react-with-actions/react-with-actions
-        registry: docker.pkg.github.com
-        username: ${{ secrets.GITHUB_USERNAME }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Dockerfile-prod
         tags: latest
-    - name: Deploy package to digitalocean
+    - name: Deploy package to AKS
       uses: appleboy/ssh-action@master
       env:
           GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
