@@ -1,5 +1,6 @@
 # Stage 1: Build the React app
-FROM node:14.17.6-alpine AS build
+FROM node:14.17.6-alpine
+#AS build
 
 # Set the working directory
 WORKDIR /app
@@ -15,19 +16,22 @@ COPY . .
 
 # Build the app for production
 RUN npm run build
+EXPOSE 3000
+
+CMD [ "npm" , "start"]
 
 # Stage 2: Serve the app with Nginx
-FROM nginx:1.21.3-alpine
+#FROM nginx:1.21.3-alpine
 
 # Copy the Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
+#COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built React app from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
+#COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port 80 for the Nginx server
-EXPOSE 80
+#EXPOSE 80
 
 # Start Nginx when the container starts
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
 
