@@ -6,9 +6,9 @@ on:
       - main
 
 env:
-  APP_NAME: your-app-name
-  NAMESPACE: your-namespace
-  ARGOCD_SERVER: https://argocd-server-url.com
+  APP_NAME: test
+  NAMESPACE: sampleapp
+  ARGOCD_SERVER: https://20.246.228.146/
   ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
   KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
@@ -30,7 +30,7 @@ jobs:
 
       - name: Update values.yaml
         run: |
-          sed -i 's/old-value/new-value/g' path/to/values.yaml
+          sed -i 's/old-value/new-value/g' Deploy/values.yaml
       
       - name: Sync with ArgoCD
         run: |
