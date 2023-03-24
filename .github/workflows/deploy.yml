@@ -1,38 +1,43 @@
-name: Deploy to AKS using ArgoCD
+name: ArgoCD Sync
 
 on:
   push:
     branches:
-      - main1
+      - main
 
 env:
-  REPO: <YOUR_GITHUB_REPO>
-  APP_NAME: react-app
-  ARGOCD_SERVER: <YOUR_ARGOCD_SERVER>
+  APP_NAME: your-app-name
+  NAMESPACE: your-namespace
+  ARGOCD_SERVER: https://argocd-server-url.com
   ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
   KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
 jobs:
-  deploy:
+  argocd-sync:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Set up kubectl
-        uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-      
-      - name: Install ArgoCD CLI
+      - name: Install kubectl and argocd CLI
         run: |
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.1.1/argocd-linux-amd64
-          sudo chmod +x /usr/local/bin/argocd
-      
-      - name: Deploy to AKS using ArgoCD
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.1.3/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+
+      - name: Update values.yaml
         run: |
-          argocd login $ARGOCD_SERVER --insecure --username admin --password $ARGOCD_TOKEN
-          argocd app create $APP_NAME --repo $REPO --path ./deploy --dest-server https://kubernetes.default.svc --dest-namespace default
-          argocd app sync $APP_NAME --wait
+          sed -i 's/old-value/new-value/g' path/to/values.yaml
+      
+      - name: Sync with ArgoCD
+        run: |
+          argocd login --insecure --grpc-web --username admin --password $ARGOCD_TOKEN $ARGOCD_SERVER
+          argocd app sync $APP_NAME -n $NAMESPACE
+
+      - name: Update manifest in AKS cluster
+        run: |
+          kubectl config use-context $(kubectl config get-contexts -o name | grep aks-cluster-name)
+          argocd app sync $APP_NAME -n $NAMESPACE --kubeconfig $KUBECONFIG
