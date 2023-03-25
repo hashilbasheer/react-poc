@@ -24,12 +24,13 @@ jobs:
       - name: Set short git commit SHA
         id: vars
         run: |
-         calculatedSha=$(git rev-parse --short ${{ github.sha }})  
+         calculatedSha=$(git rev-parse --short ${{ github.sha }})
+         set-output name=short_sha::$calculatedSha
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ steps.vars.outputs.calculatedSha }}
+          tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ steps.vars.outputs.short_sha }}
 
