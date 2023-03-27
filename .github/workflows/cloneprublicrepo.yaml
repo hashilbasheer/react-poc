@@ -35,7 +35,7 @@ jobs:
       - name: Push back to remote repo
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GHCR_TOKEN }}
+          github_token: ${{ secrets.ARGOCD_TEST }}
           repository: hashilbasheer/argocd-test
           directory: ./argocd-test/deploy
            
