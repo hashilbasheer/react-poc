@@ -14,7 +14,6 @@ jobs:
       with:
         repository: hashilbasheer/argocd-test # replace with the name of the repository you want to clone
         ref: main # replace with the branch or tag you want to checkout
-        path: ./manifest # replace with the path to clone the repository to
 
     - name: Install yq
       run: |
@@ -25,7 +24,7 @@ jobs:
       run: |
         #IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
         IMAGE_TAG=7d862f2
-        yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i ./manifest/deploy/deploy.yaml
+        yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i deploy/deploy.yaml
 
     - name: Commit and push changes to repository
       uses: EndBug/add-and-commit@v7
@@ -33,6 +32,6 @@ jobs:
         author_name: GitHub Actions
         author_email: actions@github.com
         message: Update deployment image tag
-        directory: ./manifest # replace with the path to the cloned repository
+        directory: ./ # replace with the path to the cloned repository
       env:
         GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
