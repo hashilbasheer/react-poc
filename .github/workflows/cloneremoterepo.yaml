@@ -4,8 +4,8 @@ on:
     branches:
       - main     
 env: 
-  CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
-  CI_COMMIT_AUTHOR: Continuous Integration
+  CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts!!!
+  CI_COMMIT_AUTHOR: Continuous Integration!!!!!!
 jobs:
   patch:
     runs-on: ubuntu-latest
