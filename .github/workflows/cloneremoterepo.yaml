@@ -19,7 +19,7 @@ jobs:
         run: |
           #IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
           IMAGE_TAG=7d862f2
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy.yaml
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml
           run: |
           git config --global user.email "your-email@example.com"
           git config --global user.name "Your Name"
