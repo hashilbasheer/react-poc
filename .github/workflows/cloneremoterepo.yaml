@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+env:
+  GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}      
 jobs:
   patch:
     runs-on: ubuntu-latest
@@ -23,4 +25,4 @@ jobs:
           git config --global user.name "hashilbasheer"
           git add .
           git commit -m "Patch YAML file"
-          git push origin master 
+          git push origin master  
