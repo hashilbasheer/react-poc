@@ -1,6 +1,9 @@
 name: Patch YAML file
 on:
-  workflow_dispatch:   
+  push:
+    branches:
+      - main
+  workflow_dispatch:    
 env: 
   CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts!!!
   CI_COMMIT_AUTHOR: Continuous Integration!!!!!!
@@ -21,7 +24,8 @@ jobs:
           sudo apt install yq -y
       - name: Patch YAML file with yq
         run: |
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i deploy.yaml
+          IMAGE_TAG=e7d2610
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i deploy/deploy.yaml
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
