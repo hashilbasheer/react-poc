@@ -42,14 +42,13 @@ jobs:
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
           owner: 'hashilbasheer'
-          repository: 'remote'
+          repository: 'argocd-test'
       
       - name: Access cloned repository content
         run: |
-          echo "ROOT"
           ls -la
           echo "CLONED REPO"
-          cd remote
-          ls -la
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"" -i remote/deploy/deploy.yaml    
+          cd argocd-test
+          ls -ltrh
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"" -i argocd-test/deploy/deploy.yaml    
 
