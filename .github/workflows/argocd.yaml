@@ -23,10 +23,7 @@ jobs:
         
     - name: Update deployment YAML
       run: |
-        yq e '.spec.template.spec.containers[0].image.tag = "7d862f2" ' deploy/deploy.yaml
-        tee -a deploy/deploy.yaml << EOF
-        This is text entered via the keyboard or via a script.
-        EOF
+        yq e '.spec.template.spec.containers[0].image = "ghcr.io/hashilbasheer/react-poc:7d862f2" ' deploy/deploy.yaml
     
       
       
@@ -35,6 +32,6 @@ jobs:
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
         git add .
-        git commit -m "test Commits"
+        git commit -m "Committing the Image "
         git push
 
