@@ -26,6 +26,7 @@ jobs:
           ls -la
           echo "CLONED REPO"
           cd argocd-test
+          ls -la
           ls -la deploy
           IMAGE_TAG=e7d2610
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml 
@@ -37,6 +38,6 @@ jobs:
         with:
           github_token: ${{ secrets.GHCR_TOKEN }}
           repository: hashilbasheer/argocd-test
-          directory: ./argocd-test/deploy
+          directory: ./argocd-test
           branch: ${{ github.head_ref }}
            
