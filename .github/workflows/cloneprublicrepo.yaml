@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
+      - name: Install yq
+        run: |
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
       - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
         uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
@@ -22,18 +27,10 @@ jobs:
           echo "CLONED REPO"
           cd argocd-test
           ls -la deploy
-          
-      - name: Install yq
-        run: |
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y
-      - name: Patch YAML file with yq Commit 
-        run: |
           IMAGE_TAG=e7d2610
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml 
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config  user.email "github-actions@users.noreply.github.com"
+          git config  user.name "github-actions"
           git commit -a -m "Add changes"
       - name: Push back to remote repo
         uses: ad-m/github-push-action@master
