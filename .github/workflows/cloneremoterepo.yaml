@@ -9,6 +9,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Update submodule
+        run: |
+          git submodule init
+          git submodule update  
       - name: Clone remote repository
         run: git clone https://github.com/hashilbasheer/argocd-test.git remote
       - name: Install yq
