@@ -23,9 +23,6 @@ jobs:
         run: |
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml
       - name: Push changes
-        run: |
-          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
-          git config --global user.email "joht@users.noreply.github.com"
-          git remote add upstream https://github.com/hashilbasheer/argocd-test.git
-          git commit  -m "${{ env.CI_COMMIT_MESSAGE }}"
-          git push
+        with:
+          github_token: ${{ secrets.TEST_TOK }}
+          repository: hashilbasheer/argocd-test
