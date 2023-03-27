@@ -29,13 +29,7 @@ jobs:
           context: .
           push: true
           tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }}
-          
-          
-      - name: Install yq
-        run: |
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y    
+             
           
           
       - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
@@ -59,7 +53,7 @@ jobs:
         id: get_username
         uses: mikefarah/yq@master
         with:
-          cmd: yq '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i deploy.yaml
+          cmd: yq '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i deploy/deploy.yaml
       - name: Commit and push changes
         run: |
           git config --global user.email "actions@github.com"
