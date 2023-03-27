@@ -3,7 +3,7 @@ name: ArgoCD Sync
 on:
   push:
     branches:
-      - main
+      - main1
 
 env:
   APP_NAME: test
