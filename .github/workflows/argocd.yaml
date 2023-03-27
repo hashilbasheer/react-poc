@@ -30,6 +30,6 @@ jobs:
       run: |
         git config --global user.name "hashilbasheer"
         git config --global user.email "hashilbasheer@gmail.com"
-        git add updated-deployment.yaml
+        git add deploy/deploy.yaml
         git commit -m "Update deployment image tag"
         git push  
