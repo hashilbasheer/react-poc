@@ -15,7 +15,6 @@ jobs:
         with: 
           repository: hashilbasheer/argocd-test
           token: ${{ secrets.GHCR_TOKEN }}
-          path: deploy
           
       - name: Install yq
         run: |
