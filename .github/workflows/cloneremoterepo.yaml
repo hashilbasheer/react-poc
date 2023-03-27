@@ -20,7 +20,8 @@ jobs:
         run: |
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          repository: argocd-test
-          directory: ./remote/deploy
+        run: |
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config --global user.email "joht@users.noreply.github.com"
+          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git push
