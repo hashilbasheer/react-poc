@@ -31,5 +31,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.ARGOCD_TEST }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           repository: hashilbasheer/argocd-test
