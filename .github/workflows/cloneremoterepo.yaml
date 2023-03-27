@@ -23,7 +23,7 @@ jobs:
           sudo apt install yq -y
       - name: Patch YAML file with yq
         run: |
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i deploy/deploy.yaml
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i deploy.yaml
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
