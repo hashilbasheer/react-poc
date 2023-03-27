@@ -52,5 +52,5 @@ jobs:
           ls -ltrh
           cd deploy
           ls -ltrh
-          yq e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i deploy/deploy.yaml    
+          yq e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i deploy.yaml    
           cat deploy.yaml
