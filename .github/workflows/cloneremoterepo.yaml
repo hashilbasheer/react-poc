@@ -1,4 +1,4 @@
-name: Patch Kubernetes manifest
+name: Patch YAML file
 on:
   push:
     branches:
@@ -9,26 +9,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Add remote repository
-        run: git remote add upstream https://github.com/hashilbasheer/argocd-test.git
       - name: Clone remote repository
-        run: git clone upstream remote
+        run: git clone https://github.com/hashilbasheer/argocd-test.git remote
       - name: Install yq
         run: |
-          wget https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/local/bin/yq
-          sudo chmod +x /usr/local/bin/yq
-      - name: Patch image in Kubernetes deployment manifest
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+      - name: Patch YAML file with yq
         run: |
-          #IMAGE_TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          ech "IMAGE_TAG=7d862f2"
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml
-          run: |
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml > yaml/applied.yaml
+      - name: Commit changes
+        run: |
           git config --global user.email "your-email@example.com"
           git config --global user.name "Your Name"
-          git add .
-          git commit -m "Patch Kubernetes manifest"
+          git add yaml/applied
+          git commit -m "Patch YAML file"
       - name: Push changes
         run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "hashilbasheer"
-          git push upstream HEAD:main remote/deploy/deploy.yaml
+          git push https://github.com/hashilbasheer/argocd-test.git HEAD:main
