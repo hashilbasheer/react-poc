@@ -26,4 +26,6 @@ jobs:
       - name: Commit changes
         run: |
           git remote add main https://github.com/hashilbasheer/argocd-test.gi
+          git pull
+          git add .
           git push --set-upstream remote
