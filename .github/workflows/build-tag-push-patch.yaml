@@ -52,5 +52,18 @@ jobs:
           ls -ltrh
           cd deploy
           ls -ltrh
-          yq e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i deploy.yaml    
-          cat deploy.yaml
+          #yq e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i deploy.yaml
+          
+          
+      - name: Get an entry with a variable that might contain dots or spaces
+        id: get_username
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i deploy.yaml
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add -all
+          git commit -m "Update image"
+          git push
