@@ -30,30 +30,13 @@ jobs:
           push: true
           tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }}
              
-          
-          
-      - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2
-        with:
-          owner: 'hashilbasheer'
-          repository: 'argocd-test'
-      
-      - name: Access cloned repository content
-        run: |
-          ls -la
-          echo "CLONED REPO"
-          cd argocd-test
-          ls -ltrh
-          cd deploy
-          ls -ltrh
-          #yq e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i deploy.yaml
-          
+ 
           
       - name: Get an entry with a variable that might contain dots or spaces
         id: get_username
         uses: mikefarah/yq@master
         with:
-          cmd: yq -e '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i argocd-test/deploy/deploy.yaml
+          cmd: yq -e '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i deploy/deploy.yaml
       - name: Commit and push changes
         run: |
           git config --global user.email "actions@github.com"
