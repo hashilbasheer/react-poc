@@ -2,7 +2,7 @@ name: Patch Kubernetes Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [main1]
 
 jobs:
   patch-deployment:
