@@ -10,7 +10,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Clone remote repository
-        run: git clone https://github.com/hashilbasheer/argocd-test.git remote && ls -la
+        run: git clone https://github.com/hashilbasheer/argocd-test.git remote && ls -la remote
       - name: Install yq
         run: |
           wget https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/local/bin/yq
