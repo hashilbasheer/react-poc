@@ -26,17 +26,12 @@ jobs:
           sudo apt install yq -y
       - name: Patch YAML file with yq
         run: |
-          git pull
           #yq -e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i test/manifest/deploy.yaml
           yq -i eval '.spec.template.spec.containers[0].name = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' test/deploy/deploy.yaml
           git config --global user.email "your-email@example.com" 
           git config --global user.name "Your Name" 
           git add --all 
           git commit -m "Patch Kubernetes manifest" 
-      - name: Push changes 
-        uses: ad-m/github-push-action@master 
-        with: 
-          github_token: ${{ secrets.GHCR_TOKEN }} 
-          branch: ${{ github.head_ref }}
-          repository: hashilbasheer/argocd-test
-          force: true
+          git remote add origin https://github.com/hashilbasheer/argocd-test.git
+          git branch -M main
+          git push --set-upstream origin main
