@@ -1,8 +1,6 @@
 name: Patch YAML file
 on:
-  push:
-    branches:
-      - main     
+  workflow_dispatch:   
 env: 
   CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts!!!
   CI_COMMIT_AUTHOR: Continuous Integration!!!!!!
