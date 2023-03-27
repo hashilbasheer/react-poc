@@ -25,5 +25,5 @@ jobs:
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml
       - name: Commit changes
         run: |
-          git remote add adobe https://github.com/hashilbasheer/argocd-test.gi
-          git push --set-upstream origin master
+          git remote add main https://github.com/hashilbasheer/argocd-test.gi
+          git push --set-upstream origin main
