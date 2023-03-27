@@ -32,6 +32,6 @@ jobs:
         author_name: GitHub Actions
         author_email: actions@github.com
         message: Update deployment image tag
-        directory: ./ # replace with the path to the cloned repository
+   
       env:
         GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
