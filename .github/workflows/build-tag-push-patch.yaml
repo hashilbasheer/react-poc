@@ -50,5 +50,7 @@ jobs:
           echo "CLONED REPO"
           cd argocd-test
           ls -ltrh
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"" -i deploy/deploy.yaml    
-
+          cd deploy
+          ls -ltrh
+          yq e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i deploy/deploy.yaml    
+          cat deploy.yaml
