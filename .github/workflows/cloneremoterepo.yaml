@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Checkout repository with deployment manifest
         uses: actions/checkout@v2
-        with: 
-          path: test
+      - name: Clone remote repository 
+        run: git clone https://github.com/hashilbasheer/argocd-test.git remote && ls -la test 
           
       - name: Install yq
         run: |
@@ -26,7 +26,11 @@ jobs:
         run: |
           #yq -e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i test/manifest/deploy.yaml
           yq -i eval '.spec.template.spec.containers[0].name = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' test/manifest/deploy.yaml
-      - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GHCR_TOKEN }}
+          git config --global user.email "your-email@example.com" 
+          git config --global user.name "Your Name" git 
+          add . git commit -m "Patch Kubernetes manifest" 
+      - name: Push changes 
+        uses: ad-m/github-push-action@master 
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
+          branch: main
