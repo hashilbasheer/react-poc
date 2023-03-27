@@ -20,7 +20,8 @@ jobs:
     
     - name: Install yq
       run: |
-        wget https://github.com/mikefarah/yq/releases/download/v4.12.0/yq_linux_amd64.tar.gz -O - | tar xz && mv yq_linux_amd64 /usr/bin/yq
+        wget https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/local/bin/yq
+        sudo chmod +x /usr/local/bin/yq
         
         
     - name: Update deployment YAML
