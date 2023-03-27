@@ -1,0 +1,24 @@
+name: Clone Public Repository Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+    
+  job-public-repo-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2
+        with:
+          owner: 'hashilbasheer'
+          repository: 'argocd-test'
+      
+      - name: Access cloned repository content
+        run: |
+          echo "ROOT"
+          ls -la
+          echo "CLONED REPO"
+          cd argocd-test
+          ls -la
