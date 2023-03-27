@@ -23,7 +23,7 @@ jobs:
         
     - name: Update deployment YAML
       run: |
-        yq e '.spec.template.spec.containers[0].image = "ghcr.io/hashilbasheer/react-poc:7d862f2" ' deploy/deploy.yaml
+        yq e '.spec.template.spec.containers[0].image = "ghcr.io/hashilbasheer/react-poc:e7d2610" ' deploy/deploy.yaml
     
       
       
