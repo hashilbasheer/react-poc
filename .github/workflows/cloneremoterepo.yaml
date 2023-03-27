@@ -23,3 +23,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GHCR_TOKEN }}
+          github_url: https://github.com/hashilbasheer/argocd-test.git
+          directory: ./remote/deploy
