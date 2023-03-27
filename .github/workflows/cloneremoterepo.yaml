@@ -26,6 +26,7 @@ jobs:
           sudo apt install yq -y
       - name: Patch YAML file with yq
         run: |
+          git pull
           #yq -e '.spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}\"' -i test/manifest/deploy.yaml
           yq -i eval '.spec.template.spec.containers[0].name = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' test/deploy/deploy.yaml
           git config --global user.email "your-email@example.com" 
