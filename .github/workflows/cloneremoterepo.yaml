@@ -9,6 +9,8 @@ jobs:
   patch:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository with deployment manifest
+        uses: actions/checkout@v2
       - name: Clone remote repository
         run: |
           git init
