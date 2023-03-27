@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone remote repository
-        run: git clone https://github.com/hashilbasheer/argocd-test.git remote
+        run: |
+          git init
+          git clone https://github.com/hashilbasheer/argocd-test.git remote
       - name: Install yq
         run: |
           sudo add-apt-repository ppa:rmescandon/yq
