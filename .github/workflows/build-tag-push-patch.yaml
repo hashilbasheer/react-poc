@@ -53,7 +53,7 @@ jobs:
         id: get_username
         uses: mikefarah/yq@master
         with:
-          cmd: yq '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i argocd-test/deploy/deploy.yaml
+          cmd: yq -e '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i argocd-test/deploy/deploy.yaml
       - name: Commit and push changes
         run: |
           git config --global user.email "actions@github.com"
