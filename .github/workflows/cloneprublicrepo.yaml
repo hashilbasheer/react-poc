@@ -34,10 +34,10 @@ jobs:
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml    
       - name: Push back to remote repo
         run: |
-           git config --global user.email "tester@example.com"
-           git config --global user.name "tester"
+           git config --global user.email "hashilbasheer@gmail.com"
+           git config --global user.name "hashilbasheer"
            cd argocd-test/deploy
            git add .
            git commit -m " testing on "
-           git push origin main
+           git push
            
