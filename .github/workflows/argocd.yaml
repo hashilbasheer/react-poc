@@ -12,11 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        repository: hashilbasheer/argocd-test
-        path: Manifest
-        
-    - name: Navigate to path
-      run: cd Manifest/deploy    
+        repository: hashilbasheer/argocd-test   
     
     - name: Install yq
       run: |
@@ -26,7 +22,7 @@ jobs:
         
     - name: Update deployment YAML
       run: |
-        yq e '.spec.template.spec.containers[0].image.tag = "7d862f2" ' deploy.yaml
+        yq e '.spec.template.spec.containers[0].image.tag = "7d862f2" ' deploy/deploy.yaml
     
       
       
