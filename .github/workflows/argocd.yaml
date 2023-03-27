@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        repository: 'argocd-test'
+        repository: hashilbasheer/argocd-test
         path: Manifest
         
     - name: Navigate to path
