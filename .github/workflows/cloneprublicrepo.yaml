@@ -21,4 +21,14 @@ jobs:
           ls -la
           echo "CLONED REPO"
           cd argocd-test
-          ls -la
+          ls -la deploy
+          
+      - name: Install yq
+        run: |
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+      - name: Patch YAML file with yq
+        run: |
+          IMAGE_TAG=e7d2610
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml    
