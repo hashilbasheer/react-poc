@@ -7,8 +7,6 @@ jobs:
   patch:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Clone remote repository
         run: git clone https://github.com/hashilbasheer/argocd-test.git remote
       - name: Install yq
@@ -23,7 +21,7 @@ jobs:
         run: |
           git config --global user.email "your-email@example.com"
           git config --global user.name "Your Name"
-          git add deploy/deploy.yaml
+          git add .
           git commit -m "Patch YAML file"
       - name: Push changes
         run: |
