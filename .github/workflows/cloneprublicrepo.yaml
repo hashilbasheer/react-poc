@@ -28,14 +28,18 @@ jobs:
           sudo add-apt-repository ppa:rmescandon/yq
           sudo apt update
           sudo apt install yq -y
-      - name: Patch YAML file with yq
+      - name: Patch YAML file with yq Commit 
         run: |
           IMAGE_TAG=e7d2610
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml    
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml 
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Add changes"
       - name: Push back to remote repo
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.ARGOCD_TEST }}
+          github_token: ${{ secrets.GHCR_TOKEN }}
           repository: hashilbasheer/argocd-test
           directory: ./argocd-test/deploy
+          branch: ${{ github.head_ref }}
            
