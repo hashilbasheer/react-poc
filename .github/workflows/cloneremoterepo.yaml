@@ -22,7 +22,7 @@ jobs:
           sudo apt install yq -y
       - name: Patch YAML file with yq
         run: |
-          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{IMAGE_TAG}}\"" -i remote/deploy/deploy.yaml
+          yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${IMAGE_TAG}\"" -i remote/deploy/deploy.yaml
       - name: Commit changes
         run: |
           git config --global user.name 'Hashil BH'
