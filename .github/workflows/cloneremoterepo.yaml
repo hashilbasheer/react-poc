@@ -25,7 +25,8 @@ jobs:
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:${{IMAGE_TAG}}\"" -i remote/deploy/deploy.yaml
       - name: Commit changes
         run: |
-          git remote add main https://github.com/hashilbasheer/argocd-test.gi
-          git pull
-          git add .
-          git push --set-upstream remote
+          git config --global user.name 'Hashil BH'
+          git config --global user.email 'hashilbasheer@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/argocd-test
+          git commit -am "image tagging"
+          git push
