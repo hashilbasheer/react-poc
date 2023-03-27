@@ -16,7 +16,7 @@ jobs:
         with: 
           repository: hashilbasheer/argocd-test
           token: ${{ secrets.GHCR_TOKEN }}
-          path: deploy
+          path: argocd-test
           
       - name: Install yq
         run: |
@@ -26,6 +26,7 @@ jobs:
       - name: Patch YAML file with yq
         run: |
           IMAGE_TAG=e7d2610
+          pwd
           yq e ".spec.template.spec.containers[0].image = \" ghcr.io/hashilbasheer/react-poc:e7d2610\"" -i argocd-test/deploy/deploy.yaml
       - name: Push changes
         uses: ad-m/github-push-action@master
