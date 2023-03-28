@@ -9,7 +9,7 @@ env:
   IMAGE_TAG: ${{ github.run_number }}
 
 jobs:
-  build-and-push:
+  build-and-push:             #this is the first Job
     runs-on: ubuntu-latest
 
     steps:
@@ -29,5 +29,19 @@ jobs:
           context: .
           push: true
           tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }}
-             
+          
+          
+  clone-remote-repo:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Clone Manifest Repository
+        run: | 
+          git clone -b main https://github.com/hashilbasheer/argocd-test.git
+          yq -i eval '.spec.template.spec.containers[0].Image = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' argocd-test/deploy/deploy.yaml
+          git config user.name "${{ runner.name }}"
+          git config user.email "test@example.com"
+          git add --all
+          git commit -m "Updating Image name"
+          git push origin main
+        
  
