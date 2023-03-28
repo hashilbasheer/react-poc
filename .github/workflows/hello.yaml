@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+env: 
+  IMAGE_TAG: e7d2610      
 
 jobs:
   update-argocd-image:
@@ -13,12 +15,13 @@ jobs:
         with:
           repository: hashilbasheer/argocd-test
           ref: ${{ github.head_ref }}
+          token: ${{ secret.TEST_KEY }}
  
 
       - name: Change image tag
         run: |
-          sed -i 's/image: .*$/image: <new-image-tag>/' deploy/deploy.yaml
-        working-directory: deploy
+          sed -i 's/image: .*$/image: ghcr.io/hashilbasheer/react-poc:{{ env.IMAGE_TAG }}/' ${{ github.workspace }}/deploy/deploy.yaml
+        working-directory: ${{ github.workspace }}/deploy
 
       - name: Commit and push changes
         run: |
@@ -26,4 +29,4 @@ jobs:
           git config --local user.name "hashilbasheer"
           git commit -am "Update image tag"
           git push origin HEAD
-        working-directory: deploy
+        working-directory: ${{ github.workspace }}/deploy
