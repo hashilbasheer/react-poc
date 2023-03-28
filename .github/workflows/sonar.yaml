@@ -20,11 +20,11 @@ jobs:
           run: npm run build
         - name: Run tests
           run: npm run test
-        - name: SonarCloud scan
-          uses: SonarSource/sonarcloud-github-action@master
+        - name: Cache SonarCloud packages
+          uses: actions/cache@v1
           with:
-            args: >
-              -Dsonar.organization=react-poc-org
-              -Dsonar.projectKey=poc-sonar-key
-              -Dsonar.host.url=https://sonarcloud.io
-              -Dsonar.login=$SONAR_TOKEN
+            path: ~/.sonar/cache
+            key: ${{ runner.os }}-sonar
+            restore-keys: ${{ runner.os }}-sonar
+        - name: Sonar Analysis
+          run: npm verify sonar:sonar -Dsonar.projectKey=poc-sonar-key -Dsonar.organization=react-poc-org -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
