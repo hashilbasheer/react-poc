@@ -7,6 +7,8 @@ env:
   CONTAINER_REGISTRY: ghcr.io
   CONTAINER_IMAGE: ${{ github.repository }}
   IMAGE_TAG: ${{ github.run_number }}
+  REMOTE_REPO: "https://${{ secrets.GHCR_TOKEN }}:github.com/hashilbasheer/argocd-test.git"
+  
 
 jobs:
   build-and-push:             #this is the first Job
@@ -33,10 +35,14 @@ jobs:
           
   clone-remote-repo:
     runs-on: ubuntu-latest
+    needs: build-and-push
     steps: 
       - name: Clone Manifest Repository
         run: | 
-          git clone -b main https://github.com/hashilbasheer/argocd-test.git
+          pwd
+          ls -la
+          git clone -b main ${REMOTE_REPO}
+          ls -la
           yq -i eval '.spec.template.spec.containers[0].Image = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' argocd-test/deploy/deploy.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
