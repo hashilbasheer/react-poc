@@ -27,4 +27,4 @@ jobs:
             key: ${{ runner.os }}-sonar
             restore-keys: ${{ runner.os }}-sonar
         - name: Sonar Analysis
-          run: npm verify sonar:sonar -Dsonar.projectKey=poc-sonar-key -Dsonar.organization=react-poc-org -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+          run: sonar-scanner --non-interactive -Dsonar.projectKey=poc-sonar-key -Dsonar.organization=react-poc-org -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
