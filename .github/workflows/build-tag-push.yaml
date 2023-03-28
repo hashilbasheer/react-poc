@@ -47,7 +47,8 @@ jobs:
         run: |
           cd argocd-test
           ls -la
-          yq -i eval '.spec.template.spec.containers[0].image.tag = "${{ env.IMAGE_TAG }}"' manifest/values.yaml
+          yq eval '.image.tag = "${{ env.IMAGE_TAG }}"' manifest/values.yaml
+          #yq -i eval '.spec.template.spec.containers[0].image.tag = "${{ env.IMAGE_TAG }}"' manifest/values.yaml
           cat manifest/values.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
