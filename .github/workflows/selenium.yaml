@@ -1,0 +1,46 @@
+name: Build and test React app with Selenium
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build
+
+      - name: Install dependencies for Selenium testing
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl unzip xvfb libxi6 libgconf-2-4
+          curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb
+          sudo dpkg -i chrome.deb
+          curl -sSL https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip -o chromedriver.zip
+          unzip chromedriver.zip
+          sudo mv chromedriver /usr/local/bin/
+          rm chrome.deb chromedriver.zip
+        shell: bash
+
+      - name: Start xvfb
+        run: Xvfb :99 -screen 0 1024x768x24 &
+
+      - name: Run Selenium tests
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+        run: |
+          npm test
+        shell: bash
