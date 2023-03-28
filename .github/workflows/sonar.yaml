@@ -24,7 +24,7 @@ jobs:
           uses: SonarSource/sonarcloud-github-action@master
           with:
             args: 
-              -Dsonar.organization=react-po-org
+              -Dsonar.organization=hashilbasheer
               -Dsonar.projectKey=poc-sonar-key
               -Dsonar.host.url=https://sonarcloud.io
               -Dsonar.login=$SONAR_TOKEN
