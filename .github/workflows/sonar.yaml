@@ -22,3 +22,7 @@ jobs:
           run: npm run test
         - name: SonarCloud scan
           uses: SonarSource/sonarcloud-github-action@master
+          with:
+            args: >
+              -Dsonar.organization=react-po-org
+              -Dsonar.projectKey=poc-sonar-key
