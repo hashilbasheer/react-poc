@@ -20,11 +20,11 @@ jobs:
           run: npm run build
         - name: Run tests
           run: npm run test
-        - name: Cache SonarCloud packages
-          uses: actions/cache@v1
-          with:
-            path: ~/.sonar/cache
-            key: ${{ runner.os }}-sonar
-            restore-keys: ${{ runner.os }}-sonar
-        - name: Sonar Analysis
+        - name: Install Sonar Scanner
+          run: |
+            curl -L -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+            unzip sonar-scanner-cli-4.6.2.2472-linux.zip -d /opt
+            export PATH="$PATH:/opt/sonar-scanner-4.6.2.2472-linux/bin"
+            
+        - name: Run Sonar Scan
           run: sonar-scanner --non-interactive -Dsonar.projectKey=poc-sonar-key -Dsonar.organization=react-poc-org -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
