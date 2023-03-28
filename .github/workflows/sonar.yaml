@@ -26,3 +26,5 @@ jobs:
             args: >
               -Dsonar.organization=react-po-org
               -Dsonar.projectKey=poc-sonar-key
+              -Dsonar.host.url=https://sonarcloud.io
+              -Dsonar.login=$SONAR_TOKEN
