@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          CPQ DATA NON PROD JOB TEST UPDATED.
+          Welcome to VOLVO SALES COCKPIT.
         </p>
       </header>
     </div>
