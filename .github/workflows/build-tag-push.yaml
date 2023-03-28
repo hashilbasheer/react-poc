@@ -33,16 +33,3 @@ jobs:
           tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }}
              
  
-          
-      - name: Get an entry with a variable that might contain dots or spaces
-        id: get_username
-        uses: mikefarah/yq@master
-        with:
-          cmd: yq -e '.spec.template.spec.containers[0].image = ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}' -i test/deploy/deploy.yaml
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add -all
-          git commit -m "Update image"
-          git push
