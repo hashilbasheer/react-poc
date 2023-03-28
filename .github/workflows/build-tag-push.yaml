@@ -1,4 +1,4 @@
-name: Build and Push to GitHub container registry
+name: Build Push to GitHub container registry and Deploy to AKS 
 
 on:
    workflow_dispatch:
@@ -43,12 +43,11 @@ jobs:
           ls -la
           git clone -b main ${REMOTE_REPO}
           ls -la
-      - name: Upating Manifest
+      - name: Upating Manifest with image Tag
         run: |
           cd argocd-test
           ls -la
           yq -i eval '.image.tag = "${{ env.IMAGE_TAG }}"' manifest/values.yaml
-          #yq -i eval '.spec.template.spec.containers[0].image.tag = "${{ env.IMAGE_TAG }}"' manifest/values.yaml
           cat manifest/values.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
