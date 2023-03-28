@@ -15,7 +15,7 @@ jobs:
         with:
           repository: hashilbasheer/argocd-test
           ref: ${{ github.head_ref }}
-          token: ${{ secrets.TEST_KEY }}
+          token: ${{ secrets.GHCR_TOKEN }}
  
 
       - name: Change image tag
