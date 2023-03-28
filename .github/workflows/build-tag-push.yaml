@@ -43,7 +43,12 @@ jobs:
           ls -la
           git clone -b main ${REMOTE_REPO}
           ls -la
-          yq -i eval '.spec.template.spec.containers[0].Image = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' argocd-test/deploy/deploy.yaml
+      - name: Upating Manifest
+        run: |
+          cd argocd-test
+          ls -la
+          yq -i eval '.spec.template.spec.containers[0].Image = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' deploy/deploy.yaml
+          cat deploy/deploy.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
           git add --all
