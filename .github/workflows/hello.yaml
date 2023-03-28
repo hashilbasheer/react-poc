@@ -1,0 +1,29 @@
+name: Update ArgoCD image tag
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-argocd-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ArgoCD repository
+        uses: actions/checkout@v2
+        with:
+          repository: https://github.com/hashilbasheer/argocd-test.git
+          ref: ${{ github.head_ref }}
+ 
+
+      - name: Change image tag
+        run: |
+          sed -i 's/image: .*$/image: <new-image-tag>/' deploy/deploy.yaml
+        working-directory: deploy
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "hashilbasheer@gmail.com"
+          git config --local user.name "hashilbasheer"
+          git commit -am "Update image tag"
+          git push origin HEAD
+        working-directory: deploy
