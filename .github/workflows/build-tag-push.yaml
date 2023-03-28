@@ -47,8 +47,8 @@ jobs:
         run: |
           cd argocd-test
           ls -la
-          yq -i eval '.spec.template.spec.containers[0].Image = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' deploy/deploy.yaml
-          cat deploy/deploy.yaml
+          yq -i eval '.spec.template.spec.containers[0].image.tag = "${{ env.IMAGE_TAG }}"' manifest/values.yaml
+          cat manifest/values.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
           git add --all
