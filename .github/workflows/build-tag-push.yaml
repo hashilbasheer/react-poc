@@ -7,7 +7,7 @@ env:
   CONTAINER_REGISTRY: ghcr.io
   CONTAINER_IMAGE: ${{ github.repository }}
   IMAGE_TAG: ${{ github.run_number }}
-  REMOTE_REPO: "https://hashilbasheer:${{ secrets.PASSWORD }}@github.com/hashilbasheer/argocd-test.git"
+  REMOTE_REPO: "https://${{ secrets.GHCR_TOKEN }}:@github.com/hashilbasheer/argocd-test.git"
   
 
 jobs:
