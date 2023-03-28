@@ -11,7 +11,7 @@ jobs:
       - name: Checkout ArgoCD repository
         uses: actions/checkout@v2
         with:
-          repository: https://github.com/hashilbasheer/argocd-test.git
+          repository: hashilbasheer/argocd-test
           ref: ${{ github.head_ref }}
  
 
