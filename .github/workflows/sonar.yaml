@@ -1,30 +1,20 @@
-name: SONAR
-
+name: Build
 on:
+  push:
+    branches:
+      - master
   pull_request:
     types: [opened, synchronize, reopened]
-  workflow_dispatch:    
-
 jobs:
-  Sonar:
-      runs-on: ubuntu-latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      steps:
-        - uses: actions/checkout@v2
-        - name: Install dependencies
-          run: npm install
-        - name: Build app
-          run: npm run build
-        - name: Run tests
-          run: npm run test
-        - name: SonarCloud scan
-          uses: SonarSource/sonarcloud-github-action@master
-          with:
-            args: 
-              -Dsonar.organization=hashilbasheer
-              -Dsonar.projectKey=poc-sonar-key
-              -Dsonar.host.url=https://sonarcloud.io
-              -Dsonar.login=$SONAR_TOKEN
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
