@@ -1,4 +1,4 @@
-# Stage 1: Build the React app
+# Stage 1: Build the React application
 FROM node:14.17.6-alpine
 #AS build
 
