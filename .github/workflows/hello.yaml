@@ -18,10 +18,12 @@ jobs:
           token: ${{ secrets.GHCR_TOKEN }}
  
 
-      - name: Change image tag
-        run: |
-          sed -i 's/image: .*$/image: ghcr.io/hashilbasheer/react-poc:{{ env.IMAGE_TAG }}/' ${{ github.workspace }}/deploy/deploy.yaml
-        working-directory: ${{ github.workspace }}/deploy
+      - name: Install yq
+        run: |
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+          yq -i eval '.spec.template.spec.containers[0].name = "ghcr.io/hashilbasheer/react-poc:${{ env.IMAGE_TAG }}"' ${{ github.workspace }}/deploy/deploy.yaml
 
       - name: Commit and push changes
         run: |
