@@ -4,21 +4,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  health-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-          pip install selenium
-      
-      - name: Run Selenium tests
-        run: |
-          chmod +x ./test.sh
-          ./test.sh
-
-          
-        continue-on-error: true
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: pip install selenium
+    - name: Run health check
+      run: python health_check.py
