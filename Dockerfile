@@ -4,6 +4,8 @@ FROM node:14.17.6-alpine
 
 ARG GITHUB_RUN_NUMBER=123
 
+ENV GITHUB_RUN_NUMBER=${GITHUB_RUN_NUMBER}
+
 # Set the working directory
 WORKDIR /app
 
