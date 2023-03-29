@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 app_url = sys.argv[0]
-driver_path = /usr/local/bin/
+driver_path = /usr/bin/google-chrome
 
 caps = DesiredCapabilities.CHROME.copy()
 caps["goog:loggingPrefs"] = {"browser": "ALL"}
