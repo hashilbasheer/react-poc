@@ -1,24 +1,34 @@
-name: Selenium Test - Check Application Status
+name: Selenium Test
 
 on:
-  workflow_dispatch:
+   workflow_dispatch:
 
 jobs:
-  check-url-accessibility:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Install Chrome and Chrome WebDriver
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y wget gnupg2
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        echo "deb https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
-        CHROME_DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-        wget -N https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip -P /tmp/
-        unzip /tmp/chromedriver_linux64.zip -d /tmp/
-        sudo mv /tmp/chromedriver /usr/local/bin/
-        sudo chmod +x /usr/local/bin/chromedriver
-    - name: Check URL accessibility
-      run: python health_check.py
+        python -m pip install --upgrade pip
+        pip install selenium
+
+    - name: Set up Chrome driver
+      run: |
+        LATEST_RELEASE=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+        curl https://chromedriver.storage.googleapis.com/$LATEST_RELEASE/chromedriver_linux64.zip --output chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        rm chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/
+
+    - name: Run script
+      run: |
+        python my_selenium_test.py http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/
