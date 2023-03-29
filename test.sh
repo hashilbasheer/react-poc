@@ -10,4 +10,4 @@ mv chromedriver /usr/bin/chromedriver
 chmod +x /usr/bin/chromedriver
 
 # Run the test case
-python test.py
+python my_selenium_test.py
