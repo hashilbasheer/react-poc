@@ -17,11 +17,7 @@ jobs:
       
       - name: Run Selenium tests
         run: |
-          python my_selenium_test.py
-      
-        env:
-          APP_URL: http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io
-          CHROMEDRIVER_PATH: /usr/lib/chromium-browser/chromedriver
-          CHROME_BIN: /usr/bin/chromium-browser
+          ./test.sh
+
           
         continue-on-error: true
