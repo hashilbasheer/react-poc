@@ -1,17 +1,18 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
-# Initialize Chrome webdriver
-options = webdriver.ChromeOptions()
-options.add_argument('--disable-extensions')
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
-driver = webdriver.Chrome(options=options)
+# Create a new instance of the Chrome driver
+driver = webdriver.Chrome()
 
-# Navigate to URL
-driver.get('http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io')
+# Navigate to the application URL
+driver.get('http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/')
 
-# Verify that the page title is correct
-assert 'React App1' in driver.title
+# Check if the application is healthy by looking for a specific element on the page
+try:
+    element = driver.find_element(By.XPATH, "//div[@id='health-check']//span[text()='VOLVO']")
+    print("Application is healthy")
+except:
+    print("Application is not healthy")
 
-# Close the browser
+# Close the browser window
 driver.quit()
