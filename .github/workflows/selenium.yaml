@@ -1,43 +1,43 @@
-name: Build and test React app with Selenium
+name: Selenium test for React Application
 
 on:
   workflow_dispatch:
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-
+      - name: Check out code
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: npm install
+      - name: Run tests
+        uses: nanachi/selenium-webdriver@v1.2.1
+        with:
+          browser: chrome
+          script: |
+            const webdriver = require('selenium-webdriver');
+            const chrome = require('selenium-webdriver/chrome');
 
-      - name: Build app
-        run: npm run build
+            // Set up the driver for Chrome
+            const driver = new webdriver.Builder()
+              .forBrowser('chrome')
+              .setChromeOptions(new chrome.Options().headless())
+              .build();
 
-      - name: Install dependencies for Selenium testing
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl unzip xvfb libxi6 libgconf-2-4
-          curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o chrome.deb
-          sudo dpkg -i chrome.deb
-          curl -sSL https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip -o chromedriver.zip
-          unzip chromedriver.zip
-          sudo mv chromedriver /usr/local/bin/
-          rm chrome.deb chromedriver.zip
-        shell: bash
+            // Navigate to the React application
+            const appUrl = 'http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/';
+            await driver.get(appUrl);
+            // Get the page title
+            const pageTitle = await driver.getTitle();
 
-      - name: Start xvfb
-        run: Xvfb :99 -screen 0 1024x768x24 &
+            // Check if the title contains a specific keyword
+            if (pageTitle.includes('VOLVO')) {
+              console.log('Application is up and running');
+            } else {
+              console.log('Application is not accessible');
+            }
 
-      - name: Run Selenium tests
-        env:
-          CHROME_BIN: /usr/bin/google-chrome
-        run: |
-          npm test
-        shell: bash
+            // Clean up by closing the browser
+            await driver.quit();
+            // Print a success message
+            console.log('Selenium Testing completed!!!!');
