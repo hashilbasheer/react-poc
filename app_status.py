@@ -4,8 +4,8 @@ import sys
 
 app_url = sys.argv[0]
 
-caps = DesiredCapabilities.FIREFOX.copy()
-caps["marionette"] = True
+opts = DesiredCapabilities.FIREFOX.copy()
+opts["marionette"] = True
 browser = webdriver.Firefox(capabilities=opts)
 
 browser.get(app_url)
