@@ -57,7 +57,7 @@ jobs:
         run: |
           cd argocd-test
           ls -la
-          yq -i eval '.image.tag = "${{ OUTPUT1 }}"' manifest/values.yaml
+          yq -i eval '.image.tag = "$OUTPUT1"' manifest/values.yaml
           cat manifest/values.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
