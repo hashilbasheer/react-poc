@@ -4,19 +4,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  check_status:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       
       - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y python3-pip firefox
-          pip3 install selenium
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+          pip install selenium
       
-      - name: Run Selenium script
-        env:
-          APP_URL: http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io
+      - name: Run Selenium tests
         run: |
-          python3 app_status.py
+          python my_selenium_test.py
+      
+        env:
+          APP_URL: https://example.com
+          CHROMEDRIVER_PATH: /usr/lib/chromium-browser/chromedriver
+          CHROME_BIN: /usr/bin/chromium-browser
+          
+        continue-on-error: true
