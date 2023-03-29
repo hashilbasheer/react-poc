@@ -31,6 +31,7 @@ jobs:
           context: .
           push: true
           tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }}
+          build-args: GITHUB_RUN_NUMBER=${{ github.run_number }}
           
           
   clone-remote-repo:
