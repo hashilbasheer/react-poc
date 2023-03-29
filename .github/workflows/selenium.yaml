@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  health-check:
+  check-url-accessibility:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: 3.x
     - name: Install dependencies
       run: pip install selenium
-    - name: Run health check
+    - name: Check URL accessibility
       run: python health_check.py
