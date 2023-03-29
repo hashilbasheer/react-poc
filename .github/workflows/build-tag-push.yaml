@@ -46,6 +46,7 @@ jobs:
     steps: 
       - env:
           OUTPUT1: ${{needs.build-and-push.outputs.output1}}
+        run: echo "$OUTPUT1"  
       - name: Clone Manifest Repository
         run: | 
           pwd
