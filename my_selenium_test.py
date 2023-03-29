@@ -2,20 +2,15 @@ import sys
 import time
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium import webdriver
 
 app_url = sys.argv[0]
-driver_path = /usr/bin/google-chrome
 
-caps = DesiredCapabilities.CHROME.copy()
-caps["goog:loggingPrefs"] = {"browser": "ALL"}
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
 
-options = webdriver.ChromeOptions()
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--disable-gpu')
-options.add_argument('--disable-browser-side-navigation')
-
-browser = webdriver.Chrome(options=options, executable_path=driver_path, desired_capabilities=caps)
+browser = webdriver.Chrome(chrome_options=chrome_options)
 
 def check_application_status():
     try:
