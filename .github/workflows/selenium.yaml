@@ -1,43 +1,22 @@
-name: Selenium test for React Application
+name: Selenium Test - Check Application Status
 
 on:
   workflow_dispatch:
+
 jobs:
-  test:
+  check_status:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v2
+      
       - name: Install dependencies
-        run: npm install
-      - name: Run tests
-        uses: nanachi/selenium-webdriver@v1
-        with:
-          browser: chrome
-          script: |
-            const webdriver = require('selenium-webdriver');
-            const chrome = require('selenium-webdriver/chrome');
-
-            // Set up the driver for Chrome
-            const driver = new webdriver.Builder()
-              .forBrowser('chrome')
-              .setChromeOptions(new chrome.Options().headless())
-              .build();
-
-            // Navigate to the React application
-            const appUrl = 'http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/';
-            await driver.get(appUrl);
-            // Get the page title
-            const pageTitle = await driver.getTitle();
-
-            // Check if the title contains a specific keyword
-            if (pageTitle.includes('VOLVO')) {
-              console.log('Application is up and running');
-            } else {
-              console.log('Application is not accessible');
-            }
-
-            // Clean up by closing the browser
-            await driver.quit();
-            // Print a success message
-            console.log('Selenium Testing completed!!!!');
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip firefox
+          pip3 install selenium
+      
+      - name: Run Selenium script
+        env:
+          APP_URL: http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io
+        run: |
+          python3 app_status.py
