@@ -11,12 +11,9 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(options=chrome_options)
 driver.get(url)
 
-try:
-    # Wait for an element to appear on the page
-    element_present = EC.presence_of_element_located((By.ID, "Welcome to VOLVO SALES COCKPIT with GH_RUN_NUMBER"))
-    WebDriverWait(driver, timeout=30).until(element_present)
-    print(f"{url} is accessible and the 'my-element' element was found.")
-except TimeoutError:
-    print(f"{url} is accessible but the 'my-element' element was not found.")
+# Check that the application is up and running
+assert browser.title == "React App1"
+print("Application is up and running!")
+
 
 driver.quit()
