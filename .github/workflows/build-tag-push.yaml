@@ -13,7 +13,8 @@ env:
 jobs:
   build-and-push:             #this is the first Job
     runs-on: ubuntu-latest
-
+    outputs:
+      output1: ${{ steps.vars.outputs.short_sha }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,7 +42,10 @@ jobs:
   clone-remote-repo:
     runs-on: ubuntu-latest
     needs: build-and-push
+    
     steps: 
+      - env:
+          OUTPUT1: ${{needs.build-and-push.outputs.output1}}
       - name: Clone Manifest Repository
         run: | 
           pwd
@@ -52,7 +56,7 @@ jobs:
         run: |
           cd argocd-test
           ls -la
-          yq -i eval '.image.tag = "${{ steps.vars.outputs.short_sha }}"' manifest/values.yaml
+          yq -i eval '.image.tag = "${{ OUTPUT1 }}"' manifest/values.yaml
           cat manifest/values.yaml
           git config user.name "${{ runner.name }}"
           git config user.email "test@example.com"
