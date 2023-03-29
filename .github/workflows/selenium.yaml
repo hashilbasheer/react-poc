@@ -11,7 +11,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run tests
-        uses: nanachi/selenium-webdriver@v1.2.1
+        uses: nanachi/selenium-webdriver@v1
         with:
           browser: chrome
           script: |
