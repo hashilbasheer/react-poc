@@ -1,20 +1,17 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import sys
 
-app_url = sys.argv[0]
-
-chrome_options = Options()
+# Initialize Chrome webdriver
 options = webdriver.ChromeOptions()
-chrome_options.add_argument
+options.add_argument('--disable-extensions')
+options.add_argument('--disable-gpu')
+options.add_argument('--no-sandbox')
+driver = webdriver.Chrome(options=options)
 
+# Navigate to URL
+driver.get('http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io')
 
-browser = webdriver.Chrome(options=chrome_options)
+# Verify that the page title is correct
+assert 'React App1' in driver.title
 
-browser.get(app_url)
-
-# Check that the application is up and running
-assert browser.title == "React App1"
-print("Application is up and running!")
-
-browser.quit()
+# Close the browser
+driver.quit()
