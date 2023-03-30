@@ -20,11 +20,11 @@ jobs:
         env:
           CHROME_BIN: /usr/bin/google-chrome
         run: |
-          chromeDriver = new webdriver.Builder()
-            .forBrowser('chrome')
-            .setChromeOptions(new chrome.Options().headless())
-            .build();
-          npm run test:chrome
+          echo "#!/usr/bin/env bash" > script.sh
+          echo "node -e 'var webdriver = require(\"selenium-webdriver\"), chrome = require(\"selenium-webdriver/chrome\"), chromeDriver; chromeDriver = new webdriver.Builder().forBrowser(\"chrome\").setChromeOptions(new chrome.Options().headless()).build();'" >> script.sh
+          echo "npm run test:chrome" >> script.sh
+          chmod +x script.sh
+          ./script.sh
           
           
       - name: Check application URL
