@@ -17,7 +17,5 @@ jobs:
         python -m pip install --upgrade pip
         pip install selenium
     - name: Run Selenium test
-      env:
-        GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
       run: |
         python selenium_test.py
