@@ -21,9 +21,9 @@ jobs:
           CHROME_BIN: /usr/bin/google-chrome
         run: |
           chromeDriver = new webdriver.Builder()
-              .forBrowser('chrome')
-              .setChromeOptions(new chrome.Options().headless())
-              .build();
+            .forBrowser('chrome')
+            .setChromeOptions(new chrome.Options().headless())
+            .build();
           npm run test:chrome
           
           
