@@ -1,45 +1,23 @@
 name: Selenium Test
 
 on:
-   workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-  test:
+  selenium-test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: |
-             npm install
-             npm install chromedriver
-
-      - name: Run Chrome web driver tests
-        env:
-          CHROME_BIN: /usr/bin/google-chrome
-        run: |
-          echo "#!/usr/bin/env bash" > script.sh
-          echo "node -e 'var webdriver = require(\"selenium-webdriver\"), chrome = require(\"selenium-webdriver/chrome\"), chromeDriver; chromeDriver = new webdriver.Builder().forBrowser(\"chrome\").setChromeOptions(new chrome.Options().headless()).build();'" >> script.sh
-          echo "npm run test:chrome" >> script.sh
-          chmod +x script.sh
-          ./script.sh
-          
-          
-      - name: Check application URL
-        run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/)
-          if [ $response -eq 200 ]
-          then
-              echo "Application URL is returning 200 status code"
-          else
-              echo "Application URL is not returning 200 status code"
-              exit 1
-          fi    
-
-      - name: Clean up
-        run: |
-          chromeDriver.quit();
-          # Add any other necessary cleanup steps here
-
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium
+    - name: Run Selenium test
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python selenium_test.py
