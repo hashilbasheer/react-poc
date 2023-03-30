@@ -18,6 +18,7 @@ RUN npm install
 # Copy the rest of the app code
 COPY . .
 
+RUN sed -i "s/{process.env.GITHUB_RUN_NUMBER}/${GITHUB_RUN_NUMBER}/" src/App.js
 # Build the app for production
 RUN npm run build
 EXPOSE 3000
