@@ -1,0 +1,11 @@
+CSS:
+- src/*.css
+
+JS:
+- src/*.js
+
+CI/CD:
+- .github/*
+
+HTML:
+- public/*.html
