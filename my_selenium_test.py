@@ -1,26 +1,31 @@
-import sys
-import time
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium import webdriver
+import os
 
-app_url = sys.argv[0]
+# Define the URL you want to test
+URL = "http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io"
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
+# Define the path to the chromedriver executable
+DRIVER_PATH = "/usr/local/bin/chromedriver"
 
-browser = webdriver.Chrome(chrome_options=chrome_options)
+# Set the Github Actions secret token as an environment variable
+GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 
-def check_application_status():
-    try:
-        browser.get(app_url)
-        while browser.execute_script('return document.readyState') != 'complete':
-            time.sleep(1)
-        assert browser.title == "React App1"
-        print("Application is up and running!")
-    except Exception as e:
-        print("Error: {}".format(str(e)))
+# Create a new Chrome webdriver
+options = webdriver.ChromeOptions()
+options.add_argument('--headless') # Run Chrome in headless mode
+driver = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
 
-check_application_status()
-browser.quit()
+# Visit the URL
+driver.get(URL)
+
+# Find the page title element and assert that it contains the expected text
+assert "React App1" in driver.title
+
+# Print a success message
+print("Test passed!")
+
+# Set the Github Actions status to "success"
+os.system(f'curl -H "Authorization: token {GITHUB_TOKEN}" \
+              --request POST \
+              --data \'{{"state": "success"}}\' \
+              https://api.github.com/repos/{os.environ["GITHUB_REPOSITORY"]}/statuses/{os.environ["GITHUB_SHA"]}')
