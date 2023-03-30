@@ -24,8 +24,16 @@ current_url = driver.current_url
 # Get the status code of the current URL
 status_code = urllib.request.urlopen(current_url).getcode()
 
-# Print the status code
-print(status_code)
+# Set up ANSI escape sequences for colored output
+GREEN = '\033[92m'
+RED = '\033[91m'
+ENDC = '\033[0m'
+
+# Print the status code in green or red
+if status_code >= 200 and status_code < 300:
+    print(f"{GREEN}HTTP status code: {status_code}{ENDC}")
+else:
+    print(f"{RED}HTTP status code: {status_code}{ENDC}")
 
 # Close the webdriver
 driver.quit()
