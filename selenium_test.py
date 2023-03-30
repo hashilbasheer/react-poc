@@ -1,5 +1,5 @@
+import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 # Define the URL of the webpage you want to visit
 url = "http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/"
@@ -7,21 +7,20 @@ url = "http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/"
 # Define the path to the chromedriver executable
 driver_path = "/usr/local/bin/chromedriver"
 
-# Create a ChromeOptions object and set it to run in headless mode
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-
-# Create a new Chrome webdriver with the specified options
-driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+# Create a new Chrome webdriver
+driver = webdriver.Chrome(executable_path=driver_path)
 
 # Visit the webpage
 driver.get(url)
 
-# Get the title of the webpage
-title = driver.title
+# Get the current URL after any redirects
+current_url = driver.current_url
 
-# Print the title
-print(title)
+# Get the status code of the current URL
+status_code = requests.get(current_url).status_code
+
+# Print the status code
+print(status_code)
 
 # Close the webdriver
 driver.quit()
