@@ -25,13 +25,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image - Dynamic
         uses: docker/build-push-action@v2
         with:
           context: .
+          dockerfile: Dockerfile
           push: true
           tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }}
           build-args: GITHUB_RUN_NUMBER=${{ github.run_number }}
+          
+      - name: Build and push Docker image - static
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          dockerfile: Dockerfile1
+          push: true
+          tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE }}:latest
+          build-args: GITHUB_RUN_NUMBER=static    
           
           
   clone-remote-repo:
