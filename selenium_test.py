@@ -1,5 +1,7 @@
 import subprocess
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import requests
 
 # Define the URL of the webpage you want to visit
 url = "http://volvosalescockpit.6ed500daefb04e85a911.eastus.aksapp.io/"
@@ -10,8 +12,12 @@ driver_path = "/usr/local/bin/chromedriver"
 # Install the requests module using pip
 subprocess.check_call(["pip", "install", "requests"])
 
-# Create a new Chrome webdriver
-driver = webdriver.Chrome(executable_path=driver_path)
+# Set up the Chrome options for running in headless mode
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+# Create a new Chrome webdriver with the headless option
+driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
 
 # Visit the webpage
 driver.get(url)
