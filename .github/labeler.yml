@@ -6,6 +6,7 @@ JS:
 
 CI/CD:
 - .github/*
+- Dockerfile
 
 HTML:
 - public/*.html
