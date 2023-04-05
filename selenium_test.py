@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import urllib.request
@@ -14,6 +15,9 @@ chrome_options.add_argument("--headless")
 
 # Create a new Chrome webdriver with the headless option
 driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+
+# Wait for 5 seconds
+time.sleep(360)
 
 # Visit the webpage
 driver.get(url)
