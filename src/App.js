@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Welcome to VOLVO SALES COCKPIT !!!! The Build Tag is : {process.env.GITHUB_RUN_NUMBER}
+          Welcome to VOLVO SALES COCKPIT !!!!!! The Build Tag is : {process.env.GITHUB_RUN_NUMBER}
         </p>
       </header>
     </div>
