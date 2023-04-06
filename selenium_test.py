@@ -17,7 +17,7 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
 
 # Wait for 5 seconds
-time.sleep(360)
+time.sleep(60)
 
 # Visit the webpage
 driver.get(url)
